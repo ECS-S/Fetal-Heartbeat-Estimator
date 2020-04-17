@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <!-- style -->
+    <link rel="stylesheet" href="jquery-ui.min.css">
+    <link rel="stylesheet" href="custom-slider.css">
+    <link rel="stylesheet" href="main.css">
+  </head>
+  <body>
+    <div class="content">
+
+      <!-- Title bar -->
+      <div class="info">
+        <h1>尋找胎心音</h1>
+        <hr>
+        <p><b>使用說明</b></p>
+        <ol>
+          <li>選擇懷孕週數</li>
+          <li>選擇判別模式(即時影像/上傳照片)</li>
+          <li>依照指示得到胎心預估位置(紫色標示)</li>
+        </ol>
+        <p><b>提示</b></p>
+        <ol>
+          <li>請將孕肚靠近並至中</li>
+          <li>拍照請在燈光充足處</li>
+        </ol>
+        <p><b>範例</b></p>
+        <img src="sample.jpg" class="sample-img" alt="example">
+      </div>
+
+      <!-- Enter week -->
+      <p>懷孕週數:</p>
+      <div class="slider-container">
+        <div class="slider"></div>
+      </div>
+
+      <!-- mode selection -->
+      <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'Live')" id="defaultOpen">即時影像</button>
+        <button class="tablinks" onclick="openTab(event, 'Upload')">上傳照片</button>
+      </div>
+
+      <!-- live video -->
+      <div id="Live" class="tabcontent">
+
+        <h3>即時影像</h3>
+        <p>按下開啟建後請將孕肚至中於綠色圓型</p>
+
+        <!-- buttons -->
+        <div>
+          <button class="btn" type="button" onclick="capture()">開始 / 暫停</button>
+        </div>
+
+        <!-- status -->
+
+
+        <!-- video displays -->
+        <video id="videoInput" class="invisible" width="640" height="480"></video>
+        <div class="video-container">
+          <canvas id="videoOutput" class="invisible"></canvas>
+        </div>
+        <img id="videoImage" src="video.png" alt="video placeholder">
+
+
+      </div>
+
+      <!-- upload -->
+      <div id="Upload" class="tabcontent">
+
+        <h3>上傳照片</h3>
+        <p>請上傳一張孕肚照片</p>
+
+        <img id="imageSrc" alt="No Image"/>
+
+        <!-- buttons -->
+        <div class="caption">
+          <label for="fileInput" class="btn">上傳照片</label>
+          <input type="file" id="fileInput" class="invisible" name="file" />
+        </div>
+
+        <!-- display -->
+        <div id="imgResult" class="invisible">
+          <p>預估結果</p>
+          <canvas id="canvasOutput"></canvas>
+        </div>
+
+
+      </div>
+
+    </div>
+  </body>
+  <script async src="opencv.js" type="text/javascript" onload="opencvReady()"></script>
+  <script src="jquery.js" type="text/javascript"></script>
+  <script src="jquery-ui.min.js" type="text/javascript"></script>
+  <script src="custom-slider.js" type="text/javascript"></script>
+  <script src="main.js" type="text/javascript"></script>
+  <script src="process.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    // set up an array to hold the weeks
+    var weeks = ['8 week', '12 week', '18 week','24 week', '30 week', '35 week', '36 week'];
+    $(".slider")
+    // activate the slider with options
+    .slider({
+        min: 0,
+        max: weeks.length-1
+    })
+    // add pips with the labels set to "months"
+    .slider("pips", {
+        rest: "label",
+        labels: weeks
+    })
+    // and whenever the slider changes, lets echo out the month
+    .on("slidechange", function(e,ui) {
+      // console.log(weeks[ui.value]);
+      weekChanged();
+    });
+  </script>
+</html>
