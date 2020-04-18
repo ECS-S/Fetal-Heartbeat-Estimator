@@ -114,3 +114,14 @@ img {
   margin-left: -7px;
   top: -7px;
 }
+h1 {text-align: center;}
+p {text-align: center;}
+img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+li {
+  text-align: center;
+  list-style-position: inside
+}
